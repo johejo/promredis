@@ -29,7 +29,7 @@ func Example() {
 	c := redis.NewClient(&redis.Options{
 		Addr: "localhost:6379",
 	})
-	if err := prometheus.Register(promredis.NewCollector(c)); err != nil {
+	if err := prometheus.Register(promredis.NewPoolStatsCollector(c)); err != nil {
 		panic(err)
 	}
 

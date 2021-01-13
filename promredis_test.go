@@ -26,7 +26,7 @@ func TestRegister(t *testing.T) {
 	if err := rc.Ping(ctx).Err(); err != nil {
 		t.Fatal(err)
 	}
-	c := NewCollector(rc)
+	c := NewPoolStatsCollector(rc)
 	if err := prometheus.Register(c); err != nil {
 		t.Fatal(err)
 	}

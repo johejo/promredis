@@ -6,15 +6,15 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-// Client describes a getter for *redis.PoolStats.
-type Client interface {
+// PoolStatsClient describes a getter for *redis.PoolStats.
+type PoolStatsClient interface {
 	PoolStats() *redis.PoolStats
 }
 
-var _ Client = (*redis.Client)(nil)
+var _ PoolStatsClient = (*redis.Client)(nil)
 
-type collector struct {
-	client Client
+type poolStatsCollector struct {
+	client PoolStatsClient
 
 	hitsDesc       *prometheus.Desc
 	missesDesc     *prometheus.Desc
@@ -24,11 +24,11 @@ type collector struct {
 	staleConnsDesc *prometheus.Desc
 }
 
-var _ prometheus.Collector = (*collector)(nil)
+var _ prometheus.Collector = (*poolStatsCollector)(nil)
 
-// NewCollector returns a new collector implements prometheus.Collector.
-func NewCollector(client Client) prometheus.Collector {
-	return &collector{
+// NewPoolStatsCollector returns a new collector implements prometheus.Collector.
+func NewPoolStatsCollector(client PoolStatsClient) prometheus.Collector {
+	return &poolStatsCollector{
 		client:         client,
 		hitsDesc:       prometheus.NewDesc(fqName("hits"), "Number of times free connection was found in the pool.", nil, nil),
 		missesDesc:     prometheus.NewDesc(fqName("misses"), "Number of times free connection was NOT found in the pool.", nil, nil),
@@ -44,7 +44,7 @@ func fqName(name string) string {
 }
 
 // Describe implements prometheus.Collector.
-func (c *collector) Describe(ch chan<- *prometheus.Desc) {
+func (c *poolStatsCollector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- c.hitsDesc
 	ch <- c.missesDesc
 	ch <- c.timeoutsDesc
@@ -54,7 +54,7 @@ func (c *collector) Describe(ch chan<- *prometheus.Desc) {
 }
 
 // Collect implements prometheus.Collector.
-func (c *collector) Collect(ch chan<- prometheus.Metric) {
+func (c *poolStatsCollector) Collect(ch chan<- prometheus.Metric) {
 	stats := c.client.PoolStats()
 	ch <- prometheus.MustNewConstMetric(c.hitsDesc, prometheus.GaugeValue, float64(stats.Hits))
 	ch <- prometheus.MustNewConstMetric(c.missesDesc, prometheus.GaugeValue, float64(stats.Misses))
