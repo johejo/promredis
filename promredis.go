@@ -26,6 +26,7 @@ type collector struct {
 
 var _ prometheus.Collector = (*collector)(nil)
 
+// NewCollector returns a new collector implements prometheus.Collector.
 func NewCollector(client Client) prometheus.Collector {
 	return &collector{
 		client:         client,
@@ -42,6 +43,7 @@ func fqName(name string) string {
 	return "go_redis_pool_" + name
 }
 
+// Describe implements prometheus.Collector.
 func (c *collector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- c.hitsDesc
 	ch <- c.missesDesc
@@ -51,6 +53,7 @@ func (c *collector) Describe(ch chan<- *prometheus.Desc) {
 	ch <- c.staleConnsDesc
 }
 
+// Collect implements prometheus.Collector.
 func (c *collector) Collect(ch chan<- prometheus.Metric) {
 	stats := c.client.PoolStats()
 	ch <- prometheus.MustNewConstMetric(c.hitsDesc, prometheus.GaugeValue, float64(stats.Hits))
