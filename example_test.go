@@ -42,22 +42,22 @@ func Example() {
 	}
 
 	// Output:
-	//# HELP go_redis_pool_hits Number of times free connection was found in the pool.
-	//# TYPE go_redis_pool_hits gauge
-	//go_redis_pool_hits 0
-	//# HELP go_redis_pool_idle_conns Number of idle connections in the pool.
-	//# TYPE go_redis_pool_idle_conns gauge
-	//go_redis_pool_idle_conns 0
-	//# HELP go_redis_pool_misses Number of times free connection was NOT found in the pool.
-	//# TYPE go_redis_pool_misses gauge
-	//go_redis_pool_misses 0
-	//# HELP go_redis_pool_stale_conns Number of stale connections removed from the pool.
-	//# TYPE go_redis_pool_stale_conns gauge
-	//go_redis_pool_stale_conns 0
-	//# HELP go_redis_pool_timeouts Number of times a wait timeout occurred.
-	//# TYPE go_redis_pool_timeouts gauge
-	//go_redis_pool_timeouts 0
-	//# HELP go_redis_pool_total_conns Number of total connections in the pool.
-	//# TYPE go_redis_pool_total_conns gauge
-	//go_redis_pool_total_conns 0
+	//# HELP go_redis_pool_stats_hits Number of times free connection was found in the pool.
+	//# TYPE go_redis_pool_stats_hits gauge
+	//go_redis_pool_stats_hits 0
+	//# HELP go_redis_pool_stats_idle_conns Number of idle connections in the pool.
+	//# TYPE go_redis_pool_stats_idle_conns gauge
+	//go_redis_pool_stats_idle_conns 0
+	//# HELP go_redis_pool_stats_misses Number of times free connection was NOT found in the pool.
+	//# TYPE go_redis_pool_stats_misses gauge
+	//go_redis_pool_stats_misses 0
+	//# HELP go_redis_pool_stats_stale_conns Number of stale connections removed from the pool.
+	//# TYPE go_redis_pool_stats_stale_conns gauge
+	//go_redis_pool_stats_stale_conns 0
+	//# HELP go_redis_pool_stats_timeouts Number of times a wait timeout occurred.
+	//# TYPE go_redis_pool_stats_timeouts gauge
+	//go_redis_pool_stats_timeouts 0
+	//# HELP go_redis_pool_stats_total_conns Number of total connections in the pool.
+	//# TYPE go_redis_pool_stats_total_conns gauge
+	//go_redis_pool_stats_total_conns 0
 }

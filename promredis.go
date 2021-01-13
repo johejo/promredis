@@ -40,7 +40,7 @@ func NewCollector(client Client) prometheus.Collector {
 }
 
 func fqName(name string) string {
-	return "go_redis_pool_" + name
+	return "go_redis_pool_stats_" + name
 }
 
 // Describe implements prometheus.Collector.
