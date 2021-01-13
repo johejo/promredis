@@ -7,14 +7,6 @@ on:
     branches:
       - main
 jobs:
-  golangci-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
-        with:
-          version: v1.35
   test:
     strategy:
       matrix:
@@ -27,6 +19,10 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go }}
-      - run: |
+      - name: "go vet"
+        run: |
+          go vet ./...
+      - name: "go test"
+        run: |
           go test -cover -coverprofile coverage.txt -race -v ./...
       - uses: codecov/codecov-action@v1
