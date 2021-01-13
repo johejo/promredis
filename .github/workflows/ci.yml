@@ -24,5 +24,6 @@ jobs:
           go vet ./...
       - name: "go test"
         run: |
+          docker-compose up -d
           go test -cover -coverprofile coverage.txt -race -v ./...
       - uses: codecov/codecov-action@v1

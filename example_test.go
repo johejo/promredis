@@ -1,15 +1,3 @@
-# promredis
-
-[![ci](https://github.com/johejo/promredis/workflows/ci/badge.svg?branch=main)](https://github.com/johejo/promredis/actions?query=workflow%3Aci)
-[![Go Reference](https://pkg.go.dev/badge/github.com/johejo/promredis.svg)](https://pkg.go.dev/github.com/johejo/promredis)
-[![codecov](https://codecov.io/gh/johejo/promredis/branch/main/graph/badge.svg)](https://codecov.io/gh/johejo/promredis)
-[![Go Report Card](https://goreportcard.com/badge/github.com/johejo/promredis)](https://goreportcard.com/report/github.com/johejo/promredis)
-
-Package promredis exports pool stats of go-redis/redis as prometheus metrics.
-
-## Example
-
-```go
 package promredis_test
 
 import (
@@ -73,12 +61,3 @@ func Example() {
 	//# TYPE go_redis_pool_total_conns gauge
 	//go_redis_pool_total_conns 0
 }
-```
-
-## License
-
-MIT
-
-## Author
-
-Mitsuo Heijo

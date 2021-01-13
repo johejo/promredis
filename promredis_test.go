@@ -10,37 +10,27 @@ import (
 	"testing"
 	"time"
 
-	"github.com/alicebob/miniredis/v2"
 	"github.com/go-redis/redis/v8"
+	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"go.uber.org/goleak"
 )
 
 func TestRegister(t *testing.T) {
-	defer goleak.VerifyNone(t)
-
 	ctx := context.Background()
 
-	mr, err := miniredis.Run()
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer mr.Close()
-
 	rc := redis.NewClient(&redis.Options{
-		Addr: mr.Addr(),
+		Addr: "localhost:6379",
 	})
 	defer rc.Close()
 
 	if err := rc.Ping(ctx).Err(); err != nil {
 		t.Fatal(err)
 	}
-
-	finish, err := Register(ctx, rc)
-	if err != nil {
+	c := NewCollector(rc)
+	if err := prometheus.Register(c); err != nil {
 		t.Fatal(err)
 	}
-	defer finish()
+	t.Cleanup(func() { prometheus.Unregister(c) })
 
 	for i := 0; i < 100; i++ {
 		k := "key" + strconv.Itoa(i)
@@ -57,6 +47,13 @@ func TestRegister(t *testing.T) {
 	ph.ServeHTTP(rec, req)
 
 	resp := rec.Result()
+
+	hitsName := fqName("hits")
+	missesName := fqName("misses")
+	timeoutsName := fqName("timeouts")
+	totalConnsName := fqName("total_conns")
+	idleConnsName := fqName("idle_conns")
+	staleConnsName := fqName("stale_conns")
 
 	all := []string{
 		hitsName,
