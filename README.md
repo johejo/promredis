@@ -1,5 +1,7 @@
 # promredis
 
+**DEPRECATED** Use https://pkg.go.dev/github.com/go-redis/redis/extra/redisprometheus/v9 instead
+
 [![ci](https://github.com/johejo/promredis/workflows/ci/badge.svg?branch=main)](https://github.com/johejo/promredis/actions?query=workflow%3Aci)
 [![Go Reference](https://pkg.go.dev/badge/github.com/johejo/promredis.svg)](https://pkg.go.dev/github.com/johejo/promredis)
 [![codecov](https://codecov.io/gh/johejo/promredis/branch/main/graph/badge.svg)](https://codecov.io/gh/johejo/promredis)
